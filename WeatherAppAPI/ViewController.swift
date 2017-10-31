@@ -28,17 +28,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         if let urlContent = data {
                             do {
                                 let jsonResult = try JSONSerialization.jsonObject(with: urlContent, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
-                                if let country = (jsonResult["sys"] as? NSDictionary)?["country"] as? String {
-                                    if let description = ((jsonResult["weather"] as? NSArray)?[0] as? NSDictionary)?["description"] as? String {
-                                        if let temp = (jsonResult["main"] as? NSDictionary)?["temp"] as? Float {
-                                            if let pressure = (jsonResult["main"] as? NSDictionary)?["pressure"] as? Float {
-                                                if let humidity = (jsonResult["main"] as? NSDictionary)?["humidity"] as? Float {
-                                                    if let lat = (jsonResult["coord"] as? NSDictionary)?["lat"] as? Float {
-                                                        if let lon = (jsonResult["coord"] as? NSDictionary)?["lon"] as? Float {
-                                                            if let windSpeed = (jsonResult["wind"] as? NSDictionary)?["speed"] as? Float {
-                                                                DispatchQueue.main.async(execute: {
-                                                                    self.weatherLabel.text = "Country: \(country) \n description: \(description) \n temperature: \(String(temp))°C \n pressure: \(String(pressure)) \n humidity: \(humidity) \n longitude: \(lon) \n latitude: \(lat) \n wind speed: \(windSpeed)"
-                                                                })
+                                if let name = jsonResult["name"] as? String {
+                                    if let country = (jsonResult["sys"] as? NSDictionary)?["country"] as? String {
+                                        if let description = ((jsonResult["weather"] as? NSArray)?[0] as? NSDictionary)?["description"] as? String {
+                                            if let temp = (jsonResult["main"] as? NSDictionary)?["temp"] as? Float {
+                                                if let pressure = (jsonResult["main"] as? NSDictionary)?["pressure"] as? Float {
+                                                    if let humidity = (jsonResult["main"] as? NSDictionary)?["humidity"] as? Float {
+                                                        if let lat = (jsonResult["coord"] as? NSDictionary)?["lat"] as? Float {
+                                                            if let lon = (jsonResult["coord"] as? NSDictionary)?["lon"] as? Float {
+                                                                if let windSpeed = (jsonResult["wind"] as? NSDictionary)?["speed"] as? Float {
+                                                                    DispatchQueue.main.async(execute: {
+                                                                        self.weatherLabel.text = "Name: \(name) \n Country: \(country) \n description: \(description) \n temperature: \(String(temp))°C \n pressure: \(String(pressure)) \n humidity: \(humidity) \n longitude: \(lon) \n latitude: \(lat) \n wind speed: \(windSpeed)"
+                                                                    })
+                                                                }
                                                             }
                                                         }
                                                     }
@@ -47,12 +49,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
                                         }
                                     }
                                 } else {
-                                DispatchQueue.main.async(execute: {
-                                    self.weatherLabel.text = "There is no weather data for this location! \n Please try again!"
-                                })
-                                }
+                                    DispatchQueue.main.async(execute: {
+                                        self.weatherLabel.text = "There is no weather data for this location! \n Please try again!"
+                                        })
+                                    }
                             } catch {
-                                print("error")
+                                    print("error")
                             }
                         }
                     }
@@ -60,7 +62,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 task.resume()
             }
         }
-       
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
